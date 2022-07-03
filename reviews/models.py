@@ -7,8 +7,8 @@ EMP_STATUS=(
 )
 # Create your models here.
 class Review(models.Model):
-    company=models.ForeignKey("accounts.User", verbose_name="Company", on_delete=models.CASCADE)
-    reviewer=models.ForeignKey("accounts.User", verbose_name="Reviewer", on_delete=models.CASCADE)
+    company=models.ForeignKey("accounts.User", verbose_name="Company", on_delete=models.CASCADE, related_name='review_company_id')
+    reviewer=models.ForeignKey("accounts.User", verbose_name="Reviewer", on_delete=models.CASCADE, related_name="review_employee_id")
     pros=models.TextField()
     cons=models.TextField()
     employment_status=models.CharField(choices=EMP_STATUS, max_length=50)
