@@ -1,4 +1,5 @@
 from django.db import models
+
 EMP_STATUS=(
     ("FULLTIME","Full-Time"),
     ("PARTTIME","Part-Time"),
