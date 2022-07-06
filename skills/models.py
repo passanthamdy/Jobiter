@@ -6,8 +6,4 @@ class Skill(models.Model):
 
     def __str__(self):
         return self.name
-<<<<<<< HEAD
     
-=======
-    
->>>>>>> 258d32b3c188bb550623582b7a09a7b3e53c5378

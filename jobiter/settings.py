@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'reviews',
     'salaries',
     'skills',
+    #    third party apps
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
