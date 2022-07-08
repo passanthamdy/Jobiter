@@ -1,4 +1,3 @@
-from socket import SIO_KEEPALIVE_VALS
 from django.db import models
 
 from skills.models import Skill
