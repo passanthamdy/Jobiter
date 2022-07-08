@@ -135,3 +135,16 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+accounts/__pycache__/models.cpython-38.pyc
+accounts/migrations/__pycache__/0001_initial.cpython-38.pyc
+experience/__pycache__/admin.cpython-38.pyc
+experience/__pycache__/models.cpython-38.pyc
+interviews/__pycache__/admin.cpython-38.pyc
+interviews/__pycache__/models.cpython-38.pyc
+accounts/__pycache__/models.cpython-38.pyc
+reviews/__pycache__/admin.cpython-38.pyc
+reviews/__pycache__/models.cpython-38.pyc
+salaries/__pycache__/admin.cpython-38.pyc
+salaries/__pycache__/models.cpython-38.pyc
+skills/__pycache__/models.cpython-38.pyc
+salaries/__pycache__/models.cpython-38.pyc
