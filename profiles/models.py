@@ -1,5 +1,6 @@
 from email import charset
 import imp
+from tabnanny import verbose
 from django.db import models
 from django.utils.timezone import now
 from django.core.validators import FileExtensionValidator
@@ -38,7 +39,9 @@ class Employee(User):
     job_title=models.CharField(max_length=50)
     city=models.ForeignKey("profiles.City", blank=True,null=True, on_delete=models.SET_NULL)
     city_alert= models.BooleanField(default=False)
-
+    class  Meta:
+        verbose_name = 'Employee'
+    
     def __str__(self):
         return self.first_name +" "+self.last_name
 
@@ -53,6 +56,11 @@ class Company(User):
     website= models.URLField(max_length = 200, blank=True, null=True)
     city=models.ForeignKey("profiles.City", blank=True,null=True, on_delete=models.SET_NULL)
 
+    class Meta:
+        db_table = ''
+        managed = True
+        verbose_name = 'Company'
+        verbose_name_plural = 'Companies'
 
     def __str__(self):
         return self.company_name

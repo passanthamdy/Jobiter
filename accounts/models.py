@@ -14,9 +14,5 @@ class User(AbstractUser):
     #change to phone field 
     phone=models.CharField(max_length=50,)
     image =models.ImageField(upload_to="user_images/")
-
-
-    
-
     def __str__(self):
         return self.username + ' ' + self.user_type
