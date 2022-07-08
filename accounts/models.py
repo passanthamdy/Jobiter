@@ -16,7 +16,9 @@ class User(AbstractUser):
     image =models.ImageField(upload_to="user_images/")
 
 
+
     
+
 
 
     def __str__(self):
