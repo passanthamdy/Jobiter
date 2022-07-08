@@ -84,7 +84,3 @@ class CompanySerializer(serializers.ModelSerializer):
         model=User
         fields = ('username','email','company_name', 'address','about','industry','company_size','website','started_at','city')
 
-class EmployeeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=User
-        fields = ('username', 'first_name','last_name','email', 'gender',)
