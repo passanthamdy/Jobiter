@@ -1,7 +1,10 @@
 from email import charset
+import imp
+from tabnanny import verbose
 from django.db import models
 from django.utils.timezone import now
 from django.core.validators import FileExtensionValidator
+from accounts.models import User
 # Create your models here.
 GENDER = (
     ('MALE', 'male'),
@@ -28,10 +31,7 @@ class City(models.Model):
     def __str__(self):
         return self.name
 
-class Employee(models.Model):
-    user=models.OneToOneField("accounts.User", on_delete=models.CASCADE)
-    first_name=models.CharField( max_length=50)
-    last_name =models.CharField( max_length=50)
+class Employee(User):
     gender = models.CharField(choices=GENDER, max_length=50)
     dob = models.DateField(default=now)
     cv = models.FileField(upload_to='user_cvs/', null=True, blank=True,validators=[FileExtensionValidator(allowed_extensions=["pdf"])])
@@ -39,13 +39,14 @@ class Employee(models.Model):
     job_title=models.CharField(max_length=50)
     city=models.ForeignKey("profiles.City", blank=True,null=True, on_delete=models.SET_NULL)
     city_alert= models.BooleanField(default=False)
-
+    class  Meta:
+        verbose_name = 'Employee'
+    
     def __str__(self):
         return self.first_name +" "+self.last_name
 
 
-class Company(models.Model):
-    user=models.OneToOneField("accounts.User", on_delete=models.CASCADE)
+class Company(User):
     company_name = models.CharField(max_length=50)
     address = models.CharField(max_length=100)
     about=models.TextField(blank=True, null=True)
@@ -55,6 +56,11 @@ class Company(models.Model):
     website= models.URLField(max_length = 200, blank=True, null=True)
     city=models.ForeignKey("profiles.City", blank=True,null=True, on_delete=models.SET_NULL)
 
+    class Meta:
+        db_table = ''
+        managed = True
+        verbose_name = 'Company'
+        verbose_name_plural = 'Companies'
 
     def __str__(self):
         return self.company_name
