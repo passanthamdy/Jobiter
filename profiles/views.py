@@ -6,7 +6,7 @@ from .models import Company, Employee
 from rest_framework.response import Response
 from rest_framework import status
 # Create your views here.
-class RetrieveUpdateCompany(APIView):
+class RetrieveUpdateProfile(APIView):
     def get_object(self, pk,type):
         if type == "COMPANY":
             return Company.objects.get(pk=pk)
