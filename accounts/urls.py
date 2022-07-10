@@ -3,7 +3,6 @@ from rest_framework.authtoken.views import obtain_auth_token
 from .views import company_signup,employee_signup, user_logout, custom_login
 app_name='accounts'
 
-app_name ='accounts'
 
 urlpatterns = [
     path('login/', custom_login.as_view()),

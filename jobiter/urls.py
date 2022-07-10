@@ -17,9 +17,13 @@ from django.contrib import admin
 from django.urls import path,include
 from django.contrib.staticfiles.urls import static
 from jobiter import settings
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/accounts/', include('accounts.urls')),
+    path('api/reviews/',include('reviews.urls')),
+    path('api/interviews/',include('interviews.urls')),
+
 
 ] 
 if settings.DEBUG:
