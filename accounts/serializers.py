@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from profiles.models import Company, Employee
-User = get_user_model()
 
+User = get_user_model()
 
 
 class SignupEmployeeSerializer(serializers.ModelSerializer):
@@ -10,14 +10,14 @@ class SignupEmployeeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Employee
-        fields = ('username', 'first_name','last_name','email', 'password', 'password_confirm', 'gender',)
+        fields = ('username', 'first_name', 'last_name', 'email', 'password', 'password_confirm', 'gender',)
         extra_kwargs = {
-            'first_name':{'required':True},
-            'last_name':{'required':True},
+            'first_name': {'required': True},
+            'last_name': {'required': True},
             'username': {'required': True},
             'email': {'required': True},
             'password': {'write_only': True, 'required': True},
-            
+
         }
 
     def save(self, **kwargs):
@@ -46,7 +46,9 @@ class SignupCompanySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Company
-        fields = ('username','email','company_name', 'address','about','industry','company_size','website','started_at', 'password', 'password_confirm')
+        fields = (
+        'username', 'email', 'company_name', 'address', 'about', 'industry', 'company_size', 'website', 'started_at',
+        'password', 'password_confirm')
         extra_kwargs = {
             'company_name': {'required': True},
             'address': {'required': True},
@@ -69,7 +71,7 @@ class SignupCompanySerializer(serializers.ModelSerializer):
             user_type='COMPANY',
             allow_notification=True
         )
-        print('username: ',company.username)
+        print('username: ', company.username)
         if self.validated_data.get('password') != self.validated_data.get('password_confirm'):
             raise serializers.ValidationError(
                 {'detail': "passwords didn't match"}
@@ -79,8 +81,10 @@ class SignupCompanySerializer(serializers.ModelSerializer):
             company.save()
             return company
 
+
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
-        model=User
-        fields = ('username','email','company_name', 'address','about','industry','company_size','website','started_at','city')
-
+        model = User
+        fields = (
+        'username', 'email', 'company_name', 'address', 'about', 'industry', 'company_size', 'website', 'started_at',
+        'city')

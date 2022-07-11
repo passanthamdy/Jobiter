@@ -4,7 +4,7 @@ from .models import Salary
 
 @admin.register(Salary)
 class SalaryAdmin(admin.ModelAdmin):
-        list_display=['salary','company','reviewer','job_title','start_date','end_date','is_published']
+        list_display=['id','salary','company','reviewer','job_title','start_date','end_date','is_published']
         search_fields = ('job_title','salary','company')
         list_filter = ('job_title', 'company')
         fieldsets=(
