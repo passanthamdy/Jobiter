@@ -18,6 +18,14 @@ def salaries_list(request):
     serializer = SalarySerializer(salary_object, many=True)
     return Response(data=serializer.data, status=status.HTTP_200_OK)
 
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])  # IsAuthenticated,
+@api_view(["GET"])
+def salary_view(request, pk):
+    salary_object = Salary.objects.get(pk=pk)
+    serializer=SalarySerializer(salary_object)
+    return Response(data=serializer.data, status=status.HTTP_200_OK)
+
 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
