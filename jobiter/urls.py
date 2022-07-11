@@ -20,8 +20,10 @@ from jobiter import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/accounts/', include('accounts.urls')),
-    path('api/profiles/',include('profiles.urls'))
+    path('api/profiles/',include('profiles.urls')),
+    path('experience/api/v1/', include('experience.api.v1.urls')),
+    path('salary/api/v1/', include('salaries.api.v1.urls')),
 
-] 
+]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
