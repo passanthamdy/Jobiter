@@ -13,4 +13,4 @@ class Interview(models.Model):
     
     
     def __str__(self):
-        return "Interview no. "+self.id
+        return "Interview no. "+str(self.id)
