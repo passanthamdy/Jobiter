@@ -1,5 +1,5 @@
 from dataclasses import fields
-from accounts.serializers import CompanySerializer, EmployeeSerializer
+from profiles.serializers import CompanySerializer, EmployeeSerializer
 from rest_framework import serializers
 from interviews.models import Interview
 
