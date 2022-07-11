@@ -7,12 +7,13 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view,authentication_classes,permission_classes
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from interviews.permissions import MyPermission
 
 
 
 @api_view(["GET"])
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated ])
+@permission_classes([IsAuthenticated])
 def get_list_of_interviews(request):
         interviewsList=Interview.objects.all()
         interviewsSerializer=InterviewSerializer(interviewsList,many=True)
@@ -22,7 +23,7 @@ def get_list_of_interviews(request):
     
 @api_view(["POST"])
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated ])    
+@permission_classes([IsAuthenticated,MyPermission ])    
 def create_interview(request):
         interviewSerializer=InterviewSerializer(data=request.data)
         if interviewSerializer.is_valid():
@@ -40,7 +41,7 @@ def interview_details(request, interview_id):
 
 @api_view(["DELETE"])
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated ])
+@permission_classes([IsAuthenticated,MyPermission ])
 def delete_interview(request,interview_id):
             interviewDetails = Interview.objects.get(pk=interview_id)
             interviewDetails.delete()
@@ -49,7 +50,7 @@ def delete_interview(request,interview_id):
 
 @api_view(["PUT","PATCH"])
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated ])
+@permission_classes([IsAuthenticated,MyPermission ])
 def edit_interview(request,interview_id):
         interviewDetails = Interview.objects.get(pk=interview_id)
         interviewSerializer=UpdateInterviewSerializer(interviewDetails,data=request.data,partial=True)

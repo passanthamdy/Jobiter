@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view,authentication_classes,permission_classes
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from reviews.permissions import MyPermission
 
 # Create your views here.
 
@@ -21,7 +22,7 @@ def get_list_of_reviews(request):
     
 @api_view(["POST"])  
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated ])  
+@permission_classes([IsAuthenticated,MyPermission ])  
 def create_review(request):
         reviewSerializer=ReviewSerializer(data=request.data)
         if reviewSerializer.is_valid():
@@ -31,7 +32,7 @@ def create_review(request):
 
 @api_view(["GET"])
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated ])
+@permission_classes([IsAuthenticated,MyPermission ])
 def review_details(request, review_id):
     reviewDetails = Review.objects.get(pk=review_id)
     reviewSerializer = ReviewSerializer(reviewDetails)
@@ -39,7 +40,7 @@ def review_details(request, review_id):
 
 @api_view(["DELETE"])
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated ])
+@permission_classes([IsAuthenticated,MyPermission ])
 def delete_review(request,review_id):
             reviewDetails = Review.objects.get(pk=review_id)
             reviewDetails.delete()
@@ -48,7 +49,7 @@ def delete_review(request,review_id):
 
 @api_view(["PUT","PATCH"])
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated ])
+@permission_classes([IsAuthenticated,MyPermission ])
 def edit_review(request,review_id):
         reviewDetails = Review.objects.get(pk=review_id)
         reviewSerializer=UpdateReviewSerializer(reviewDetails,data=request.data,partial=True)
