@@ -5,8 +5,9 @@ from django.db import models
 from django.utils.timezone import now
 from django.core.validators import FileExtensionValidator
 from accounts.models import User
-
 # Create your models here.
+from skills.models import Skill
+
 GENDER = (
     ('MALE', 'male'),
     ('FEMALE', 'Female'),
@@ -42,6 +43,7 @@ class Employee(User):
     job_title = models.CharField(max_length=50)
     city = models.ForeignKey("profiles.City", blank=True, null=True, on_delete=models.SET_NULL)
     city_alert = models.BooleanField(default=False)
+    skills = models.ManyToManyField(Skill, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Employee'
@@ -55,7 +57,7 @@ class Company(User):
     address = models.CharField(max_length=100)
     about = models.TextField(blank=True, null=True)
     industry = models.CharField(max_length=50)
-    company_size = models.CharField(choices=SIZE, max_length=50, default="LESS_50", blank=True, null=True)
+    company_size = models.CharField(choices=SIZE, max_length=50, default="LESS_50")
     started_at = models.DateField()
     website = models.URLField(max_length=200, blank=True, null=True)
     city = models.ForeignKey("profiles.City", blank=True, null=True, on_delete=models.SET_NULL)

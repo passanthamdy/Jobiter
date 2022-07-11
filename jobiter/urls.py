@@ -14,15 +14,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
 from django.contrib.staticfiles.urls import static
 from jobiter import settings
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/accounts/', include('accounts.urls')),
     path('api/profiles/',include('profiles.urls')),
     path('experience/api/v1/', include('experience.api.v1.urls')),
     path('salary/api/v1/', include('salaries.api.v1.urls')),
+
+    path('api/reviews/',include('reviews.urls')),
+    path('api/interviews/',include('interviews.urls')),
+
+    path('api/profiles/', include('profiles.urls')),
+    path('api/skills/', include('skills.urls'))
 
 ]
 if settings.DEBUG:
