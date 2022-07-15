@@ -43,7 +43,7 @@ class Employee(User):
     job_title = models.CharField(max_length=50)
     city = models.ForeignKey("profiles.City", blank=True, null=True, on_delete=models.SET_NULL)
     city_alert = models.BooleanField(default=False)
-    skills = models.ManyToManyField(Skill, null=True, blank=True)
+    skills = models.ManyToManyField(Skill, blank=True)
 
     class Meta:
         verbose_name = 'Employee'

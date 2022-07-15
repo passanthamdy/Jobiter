@@ -33,7 +33,7 @@ class SignupEmployeeSerializer(serializers.ModelSerializer):
         )
         if self.validated_data.get('password') != self.validated_data.get('password_confirm'):
             raise serializers.ValidationError(
-                {'detail': "passwords didn't match"}
+                {'confirm_password': "passwords didn't match"}
             )
         else:
             employee.set_password(self.validated_data.get('password'))
@@ -74,7 +74,7 @@ class SignupCompanySerializer(serializers.ModelSerializer):
         print('username: ', company.username)
         if self.validated_data.get('password') != self.validated_data.get('password_confirm'):
             raise serializers.ValidationError(
-                {'detail': "passwords didn't match"}
+                {'confirm_password': "passwords didn't match"}
             )
         else:
             company.set_password(self.validated_data.get('password'))
