@@ -3,12 +3,12 @@ from .models import Job
 # Register your models here.
 @admin.register(Job)
 class JobAdmin(admin.ModelAdmin):
-    list_display = ['company', 'job_title','level','Description','job_type', 'work_type','salary','state','get_skills',]
+    list_display = ['company', 'job_title','level','Description','job_type', 'work_type','salary','state',]
     search_fields = ('company','level','job_title','job_type','work_type')
     
-    def get_skills(self, obj):
-            if obj.skill.all():
-                return list(obj.skill.all().values_list('name', flat=True))
-            else:
-                return 'No Skills Yet...'
-    get_skills.short_description = 'Skills'
+    # def get_skills(self, obj):
+    #         if obj.skill.all():
+    #             return list(obj.skill.all().values_list('name', flat=True))
+    #         else:
+    #             return 'No Skills Yet...'
+    # get_skills.short_description = 'Skills'
