@@ -1,27 +1,30 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
 from skills.models import Skill
-JOB_STATUS=(
-    ("FULLTIME","Full-Time"),
-    ("PARTTIME","Part-Time"),
-    ("INTERN","Internship"),
+
+JOB_STATUS = (
+    ("FULLTIME", "Full-Time"),
+    ("PARTTIME", "Part-Time"),
+    ("INTERN", "Internship"),
 
 )
-LEVEL=(
-    ("JUNIOR","Junior"),
-    ("SENIOR","Senior"),
-    ("ENTRY-LEVEL","Entry-level"),
+LEVEL = (
+    ("JUNIOR", "Junior"),
+    ("SENIOR", "Senior"),
+    ("ENTRY-LEVEL", "Entry-level"),
 )
-WORK=(
-    ("REMOTE","Remote"),
-    ("ONSITE","Onsite"),
-    ("HYBRID","Hybrid"),
+WORK = (
+    ("REMOTE", "Remote"),
+    ("ONSITE", "Onsite"),
+    ("HYBRID", "Hybrid"),
 )
-STATE=(
-    ("OPEN","Open"),
-    ("CLOSED","Closed"),
-    
+STATE = (
+    ("OPEN", "Open"),
+    ("CLOSED", "Closed"),
+
 )
+
+
 # Create your models here.
 class Job(models.Model):
     company=models.ForeignKey("profiles.Company", verbose_name="Company", on_delete=models.CASCADE)
