@@ -5,14 +5,21 @@ app_name = 'jobs'
 
 urlpatterns = [
     #Company urls >> jobs/company/co...
-    path('create/', views.ListCompanyJobs.as_view()),
-    path('', views.ListCompanyJobs.as_view()),
+    path('create/', views.CreateJob),
+    path('', views.ListCompanyJobs),
     path('<int:pk>/', views.RetrieveUpdateDeleteCompanyJob.as_view()),
-    #path('<int:pk>/accept/',views.AcceptDeveloper),
     path('<int:pk>/close/',views.close_job),
+    path('<int:pk>/applied_employees', views.list_applied_employees),
+    path('<int:job_id>/applied_employees/accept_employee/', views.accept_employee),
+    path('<int:pk>/applied_employees/view_applicant/', views.view_applicant),
+
+#   employee url >>
     path('applied-jobs/',views.list_applied_jobs),
-    path('applied_employees', views.list_applied_employees),
     path('<int:pk>/apply/',views.ApplyForJob.as_view()),
+    path('all_jobs/',views.ListJobs.as_view()),
+    
+
+
 
 
 ]

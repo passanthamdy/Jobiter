@@ -17,3 +17,4 @@ class EmployeeSerializer(serializers.ModelSerializer):
         model = Employee
         fields = ('id', 'username', 'first_name', 'last_name', 'email', 'gender', 'dob',
                   'city', 'level', 'job_title', 'city_alert', 'allow_notification', 'cv', 'user_type', 'skills')
+                  

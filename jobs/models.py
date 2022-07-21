@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
 from skills.models import Skill
+from accounts.models import User
 
 JOB_STATUS = (
     ("FULLTIME", "Full-Time"),
@@ -35,10 +36,10 @@ class Job(models.Model):
     work_type=models.CharField(choices=WORK, max_length=50)
     salary = models.IntegerField()
     state=models.CharField(choices=STATE, max_length=50, default='OPEN')
-    # skills=models.ManyToManyField(Skill)
+    skills=models.ManyToManyField(Skill, blank=True, null=True)
     
     def __str__(self):
-        return "Job no. "+ self.job_title
+        return "Job "+ self.job_title
 
 class AppliedEmployees(models.Model):
     job=models.ForeignKey("jobs.Job", verbose_name="Job", on_delete=models.CASCADE)
@@ -48,6 +49,6 @@ class AppliedEmployees(models.Model):
     notice_period=models.IntegerField()
     years_of_exp=models.IntegerField()
     cover_letter=models.TextField()
+    accepted=models.BooleanField(default=False)
     def __str__(self):
         return self.job.job_title 
-    
