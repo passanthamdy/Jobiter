@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view
 from rest_framework import generics
 from profiles.models import Company, Employee
 from django.core.exceptions import ObjectDoesNotExist
+from notifications.models import Notification
 # Create your views here.
 """
 endpoints that performed by compnay user
@@ -115,6 +116,10 @@ class ApplyForJob(APIView):
         employee=Employee.objects.get(id=user)
         job=Job.objects.get(id=pk)
         application=AppliedEmployees.objects.filter(job=job)
+        
+        print("user>>",application)
+        print("jobb>>", job)
+        print("employee>>",employee)
         for p in application:
             if p.employee.id == request.user.id:
                 return Response({"details": "You applied to this job before"}, status=status.HTTP_400_BAD_REQUEST)
@@ -122,7 +127,11 @@ class ApplyForJob(APIView):
             return Response({"details": "You're not allowed to apply to a job if you're not registered as employee"}, status=status.HTTP_400_BAD_REQUEST)
         serializer = AppliedEmployeesSerializer(data=request.data, context={'request':request})
         if serializer.is_valid():
+            notification=Notification.objects.create(
+                    user=job.company, message="New employee applied to your job ",job=job,employee=employee
+                )
             serializer.save(employee=employee,job=job)
+          
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
