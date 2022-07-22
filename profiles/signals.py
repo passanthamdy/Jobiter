@@ -16,5 +16,5 @@ def city_post_save_action(*args, **kwargs):
         obj = kwargs.get('instance')
         subject = 'Test job Email '
         msg = 'Email Test'
-        receivers = ['ramojaalaa15@gmail.com', 'youssef.ibrahem.2022@gmail.com']
+        receivers = ['passant.hamdy99@gmail.com', 'youssef.ibrahem.2022@gmail.com']
         send_mail(subject=subject, message=msg, from_email='youssef.15404@gmail.com', recipient_list=receivers)
