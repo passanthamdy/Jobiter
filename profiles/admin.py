@@ -21,7 +21,7 @@ class ChildClassAdmin(UserAdmin):
         ('Employee',
          {'fields': ['username', 'password', 'email', 'job_title', 'phone', 'gender', 'image', 'level', 'cv']}),
         ('Personal data section',
-         {'fields': ['first_name', 'last_name', 'dob', 'city', ]}),
+         {'fields': ['first_name', 'last_name', 'dob', 'city', 'skills']}),
     )
 
 
