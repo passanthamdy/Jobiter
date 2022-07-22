@@ -3,8 +3,7 @@ from django.db import models
 
 # Create your models here.
 class Salary(models.Model):
-    company = models.ForeignKey("accounts.User", verbose_name="Company", on_delete=models.CASCADE,
-                                related_name='salary_company_id')
+    company = models.TextField()
     reviewer = models.ForeignKey("accounts.User", verbose_name="Reviewer", on_delete=models.CASCADE,
                                  related_name="salary_employee_id")
     salary = models.IntegerField()
