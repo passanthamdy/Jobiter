@@ -55,12 +55,12 @@ class Employee(User):
 class Company(User):
     company_name = models.CharField(max_length=50)
     address = models.CharField(max_length=100)
-    about = models.TextField()
+    about = models.TextField(blank=True, null=True)
     industry = models.CharField(max_length=50)
     company_size = models.CharField(choices=SIZE, max_length=50, default="LESS_50")
-    started_at = models.DateField(blank=True,null=True)
-    website = models.URLField(max_length=200, blank=True, null=True, default="")
-    city = models.ForeignKey("profiles.City",null=True, on_delete=models.SET_NULL)
+    started_at = models.DateField()
+    website = models.URLField(max_length=200, blank=True, null=True)
+    city = models.ForeignKey("profiles.City", blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         db_table = ''

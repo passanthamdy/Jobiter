@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.contrib.staticfiles.urls import static
 from jobiter import settings
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/accounts/', include('accounts.urls')),
