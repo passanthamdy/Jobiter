@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'reviews',
     'salaries',
     'skills',
+    'notifications',
     #    third party apps
     'rest_framework',
     'rest_framework.authtoken',

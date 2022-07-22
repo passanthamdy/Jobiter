@@ -59,7 +59,7 @@ class Company(User):
     industry = models.CharField(max_length=50)
     company_size = models.CharField(choices=SIZE, max_length=50, default="LESS_50")
     started_at = models.DateField(blank=True,null=True)
-    website = models.URLField(max_length=200, blank=True, null=True)
+    website = models.URLField(max_length=200, blank=True, null=True, default="")
     city = models.ForeignKey("profiles.City",null=True, on_delete=models.SET_NULL)
 
     class Meta:
