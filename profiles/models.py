@@ -36,11 +36,11 @@ class City(models.Model):
 
 class Employee(User):
     gender = models.CharField(choices=GENDER, max_length=50)
-    dob = models.DateField(default=now)
+    dob = models.DateField()
     cv = models.FileField(upload_to='user_cvs/', null=True, blank=True,
                           validators=[FileExtensionValidator(allowed_extensions=["pdf"])])
     level = models.CharField(choices=LEVELS, max_length=50, default="ENTRY_LEVEL")
-    job_title = models.CharField(max_length=50)
+    job_title = models.CharField(max_length=50,blank=True)
     city = models.ForeignKey("profiles.City", blank=True, null=True, on_delete=models.SET_NULL)
     city_alert = models.BooleanField(default=False)
     skills = models.ManyToManyField(Skill, blank=True)
@@ -55,12 +55,12 @@ class Employee(User):
 class Company(User):
     company_name = models.CharField(max_length=50)
     address = models.CharField(max_length=100)
-    about = models.TextField(blank=True, null=True)
+    about = models.TextField()
     industry = models.CharField(max_length=50)
     company_size = models.CharField(choices=SIZE, max_length=50, default="LESS_50")
-    started_at = models.DateField()
+    started_at = models.DateField(blank=True,null=True)
     website = models.URLField(max_length=200, blank=True, null=True)
-    city = models.ForeignKey("profiles.City", blank=True, null=True, on_delete=models.SET_NULL)
+    city = models.ForeignKey("profiles.City",null=True, on_delete=models.SET_NULL)
 
     class Meta:
         db_table = ''

@@ -5,6 +5,7 @@ from .serializers import CompanySerializer,EmployeeSerializer
 from .models import Company, Employee
 from rest_framework.response import Response
 from rest_framework import status
+from accounts.models import User
 # Create your views here.
 class RetrieveUpdateProfile(APIView):
     def get_object(self, pk,type):
@@ -19,8 +20,11 @@ class RetrieveUpdateProfile(APIView):
             return EmployeeSerializer(query)
     
     def get(self, request, pk, format=None):
-        user_type=request.user.user_type
+        user=User.objects.get(pk=pk)
+        user_type=user.user_type
+        print(pk,'>>',user_type)
         profile = self.get_object(pk,user_type)
+        print(profile)
         serializer = self.get_serializer(user_type,profile)
         return Response(serializer.data)
     
