@@ -13,8 +13,10 @@ class Review(models.Model):
     company = models.ForeignKey("accounts.User", verbose_name="Company", on_delete=models.CASCADE,
                                 related_name='review_company_id')
     reviewer = models.ForeignKey("accounts.User", verbose_name="Reviewer", on_delete=models.CASCADE,
-                                 related_name="review_employee_id")
+                          related_name="review_employee_id")
     pros = models.TextField()
+    # position = models.CharField(max_length=50)
+    # title = models.CharField(max_length=50)
     cons = models.TextField()
     employment_status = models.CharField(choices=EMP_STATUS, max_length=50)
     rating = models.IntegerField()
