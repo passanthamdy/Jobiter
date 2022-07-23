@@ -16,8 +16,10 @@ class Review(models.Model):
                                  related_name="review_employee_id")
     pros = models.TextField()
     cons = models.TextField()
+    title=models.TextField(default='')
     employment_status = models.CharField(choices=EMP_STATUS, max_length=50)
     rating = models.IntegerField()
+    state=models.BooleanField(default=True)
     is_published = models.BooleanField(default=False)
 
     def __str__(self):
