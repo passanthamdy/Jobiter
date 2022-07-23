@@ -6,5 +6,7 @@ from . import views
 urlpatterns = [
     path('<int:pk>/show/', views.RetrieveUpdateProfile.as_view()),
     path('<int:pk>/update/', views.RetrieveUpdateProfile.as_view()),
+    path('allow_notifications/', views.allow_notification),
+
 
 ]
