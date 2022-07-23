@@ -6,19 +6,7 @@ from django.core.mail import send_mail
 from celery import shared_task
 from profiles.models import City
 
-@shared_task
-@receiver(post_save, sender=City)
-def city_post_save_action(*args, **kwargs):
-    print(args)
-    print('----------------')
-    print(kwargs)
-    print('*********************')
-    if kwargs.get('created'):
-        obj = kwargs.get('instance')
-        subject = 'Test job Email '
-        msg = 'Email Test'
-        receivers = ['passant.hamdy99@gmail.com', ]
-        send_mail(subject=subject, message=msg, from_email='youssef.15404@gmail.com', recipient_list=receivers)
+
 
 @shared_task
 @receiver(m2m_changed, sender=Job.skills.through)

@@ -3,7 +3,10 @@ from django.contrib import admin
 from profiles.models import Company, Employee, City
 from accounts.admin import UserAdmin
 
-admin.site.register(City)
+
+@admin.register(City)
+class CityAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
 
 
 # Register your models here.
@@ -37,7 +40,7 @@ class ChildClassAdmin(UserAdmin):
     fieldsets = (
         ('Company', {
             'fields': ['username', 'password', 'company_name', 'industry', 'company_size', 'started_at', 'phone',
-                       'image', 'address']}),
+                       'image', 'address', 'allow_notification']}),
         ('non required data section',
          {'fields': ['website', 'email', 'city', 'about']}),
     )
