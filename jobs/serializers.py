@@ -34,4 +34,5 @@ class JobCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
         exclude=('company',)
+        optional_fields=['salary',]
    

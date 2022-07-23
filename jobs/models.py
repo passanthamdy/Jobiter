@@ -35,7 +35,7 @@ class Job(models.Model):
     Description=models.TextField()
     job_type=models.CharField(choices=JOB_STATUS, max_length=50)
     work_type=models.CharField(choices=WORK, max_length=50)
-    salary = models.IntegerField()
+    salary = models.IntegerField(blank=True, null=True)
     state=models.CharField(choices=STATE, max_length=50, default='OPEN')
     skills=models.ManyToManyField(Skill, blank=True, null=True)
     created_at=models.DateField(auto_now=False, auto_now_add=True,null=True)
