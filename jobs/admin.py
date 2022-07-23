@@ -1,14 +1,7 @@
 from django.contrib import admin
-from .models import Job
+
+from jobs.models import AppliedEmployees, Job
+
 # Register your models here.
-@admin.register(Job)
-class JobAdmin(admin.ModelAdmin):
-    list_display = ['company', 'job_title','level','Description','job_type', 'work_type','salary','state','get_skills',]
-    search_fields = ('company','level','job_title','job_type','work_type')
-    
-    def get_skills(self, obj):
-            if obj.skill.all():
-                return list(obj.skill.all().values_list('name', flat=True))
-            else:
-                return 'No Skills Yet...'
-    get_skills.short_description = 'Skills'
+admin.site.register(Job)
+admin.site.register(AppliedEmployees)
