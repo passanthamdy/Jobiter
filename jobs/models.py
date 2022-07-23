@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db import models
 from django.core.validators import FileExtensionValidator
 from skills.models import Skill
@@ -37,6 +38,7 @@ class Job(models.Model):
     salary = models.IntegerField()
     state=models.CharField(choices=STATE, max_length=50, default='OPEN')
     skills=models.ManyToManyField(Skill, blank=True, null=True)
+    created_at=models.DateField(auto_now=False, auto_now_add=True,null=True)
     
     def __str__(self):
         return "Job "+ self.job_title
@@ -50,5 +52,7 @@ class AppliedEmployees(models.Model):
     years_of_exp=models.IntegerField()
     cover_letter=models.TextField()
     accepted=models.BooleanField(default=False)
+    created_at=models.DateField(auto_now=False, auto_now_add=True,null=True)
+
     def __str__(self):
         return self.job.job_title 
