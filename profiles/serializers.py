@@ -9,6 +9,7 @@ class CompanySerializer(serializers.ModelSerializer):
         model = Company
         fields = ('id', 'username', 'email', 'company_name', 'address', 'about', 'industry',
                   'company_size', 'started_at', 'website', 'city', 'allow_notification', 'user_type','image')
+        depth=1
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
