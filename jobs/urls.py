@@ -6,7 +6,7 @@ app_name = 'jobs'
 urlpatterns = [
     #Company urls >> jobs/company/co...
     path('create/', views.CreateJob),
-    path('', views.ListCompanyJobs),
+    path('company_jobs/', views.ListCompanyJobs),
     path('<int:pk>/', views.RetrieveUpdateDeleteCompanyJob.as_view()),
     path('<int:pk>/close/',views.close_job),
     path('<int:pk>/applied_employees', views.list_applied_employees),

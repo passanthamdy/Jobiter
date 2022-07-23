@@ -18,6 +18,7 @@ endpoints that performed by compnay user
 def CreateJob(request):
     serializer = JobCreateSerializer(data=request.data,context={'request': request})
     user=request.user.id
+    print('>>>>>',user)
     company=Company.objects.get(id=user)
     if serializer.is_valid():
         serializer.save(company=company)
@@ -83,10 +84,12 @@ class RetrieveUpdateDeleteCompanyJob(APIView):
 @api_view(['POST'])
 def close_job(request,pk):
     job = Job.objects.get(id=pk)
+    print(job.company.id,'>>>',request.user)
     if job.company.id == request.user.id:
-        job.state = 'CLOSED'
-        job.save()
-        return Response({"details":f"Your job is Finished"},status=status.HTTP_201_CREATED)
+            print('closed')
+            job.state = 'CLOSED'
+            job.save()
+            return Response({"details":f"Your job is Finished"},status=status.HTTP_201_CREATED)
     return Response({"details": "You cannot close job that not related to your company"}, status=status.HTTP_400_BAD_REQUEST)
 @api_view(['GET'])
 def view_applicant(request,pk):
