@@ -5,16 +5,21 @@ from jobs.models import Job,AppliedEmployees
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,authentication_classes,permission_classes
 from rest_framework import generics
 from profiles.models import Company, Employee
 from django.core.exceptions import ObjectDoesNotExist
 from notifications.models import Notification
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from .permissions import MyPermission
 # Create your views here.
 """
 endpoints that performed by compnay user
 """
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated, MyPermission, ])
 def CreateJob(request):
     serializer = JobCreateSerializer(data=request.data,context={'request': request})
     user=request.user.id
@@ -22,10 +27,12 @@ def CreateJob(request):
     company=Company.objects.get(id=user)
     if serializer.is_valid():
         serializer.save(company=company)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
+        return Response(serializer.data, status=status.HTTP_201_CREATED) 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated, MyPermission, ])
 def ListCompanyJobs( request):
         """
         Return a list of all jobs related to the requested user.
@@ -38,6 +45,7 @@ class RetrieveUpdateDeleteCompanyJob(APIView):
     """
     get the job object 
     """
+    permission_classes =(IsAuthenticated,)
     def get_object(self, pk):
         try:
             return Job.objects.get(pk=pk)
@@ -82,6 +90,8 @@ class RetrieveUpdateDeleteCompanyJob(APIView):
         return Response({"details": "job is not deleted"}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated, MyPermission, ])
 def close_job(request,pk):
     job = Job.objects.get(id=pk)
     print(job.company.id,'>>>',request.user)
@@ -91,38 +101,44 @@ def close_job(request,pk):
             job.save()
             return Response({"details":f"Your job is Finished"},status=status.HTTP_201_CREATED)
     return Response({"details": "You cannot close job that not related to your company"}, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated, MyPermission, ])
 def view_applicant(request,pk):
-    # user=request.user.id
-    # employee=Employee.objects.get(id=user)
     app = AppliedEmployees.objects.get(pk=pk)
-    serializer = AppliedEmployeesSerializer(app)
-    return Response(serializer.data,status=status.HTTP_201_CREATED)
+    if app.job.company.id == request.user.id:
+        serializer = AppliedEmployeesSerializer(app)
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
+    return Response({"details": "You cannot check applicants that not belong to your job"}, status=status.HTTP_400_BAD_REQUEST)
+
 
 """
 endpoint that get all the applied employees in certain job
 """ 
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated, MyPermission, ])
 def list_applied_employees(request,pk):
     job =Job.objects.get(pk=pk)
-    employees= AppliedEmployees.objects.get(job=job)
-    serializer = AppliedEmployeesSerializer(employees)
-    return Response(serializer.data,status=status.HTTP_201_CREATED)
+    if job.company.id == request.user.id:
+        employees= AppliedEmployees.objects.get(job=job)
+        serializer = AppliedEmployeesSerializer(employees)
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
+    return Response({"details": "You cannot list employees that does not belong to your jobs"}, status=status.HTTP_400_BAD_REQUEST)
 
 """
 endpoints that performed by Employee users
 """
 
 class ApplyForJob(APIView):
+    permission_classes =(IsAuthenticated,)
+
     def post(self,request,pk,format=None):
         user=request.user.id
         employee=Employee.objects.get(id=user)
         job=Job.objects.get(id=pk)
         application=AppliedEmployees.objects.filter(job=job)
-        
-        print("user>>",application)
-        print("jobb>>", job)
-        print("employee>>",employee)
         for p in application:
             if p.employee.id == request.user.id:
                 return Response({"details": "You applied to this job before"}, status=status.HTTP_400_BAD_REQUEST)
@@ -150,12 +166,15 @@ def list_applied_jobs(request):
     return Response(serializer.data,status=status.HTTP_201_CREATED)
 
 class ListJobs(APIView):
+    permission_classes =(IsAuthenticated,)
     def get(self,request,format=None):
         jobs= Job.objects.all()
         serializer = JobSerializer(jobs, many=True)
         return Response(serializer.data)
 
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated, MyPermission, ])
 def accept_employee(request,job_id):
     user_id=request.data['id']
     job=Job.objects.get(pk=job_id)
