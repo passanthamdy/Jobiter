@@ -25,7 +25,8 @@ class JobUpdateSerializer(serializers.ModelSerializer):
 class AppliedEmployeesSerializer(serializers.ModelSerializer):
     class Meta:
         model=AppliedEmployees
-        fields=['notice_period','cv','years_of_exp','cover_letter']
+        fields=['cv','years_of_exp','notice_period','cover_letter']
+        optional_fields=['notice_period','cover_letter']
         depth=1
 
 

@@ -48,9 +48,9 @@ class AppliedEmployees(models.Model):
     employee=models.ForeignKey("profiles.Employee", verbose_name="Employee", on_delete=models.CASCADE)
     cv = models.FileField(upload_to='user_cvs/', null=True, blank=True,
     validators=[FileExtensionValidator(allowed_extensions=["pdf"])])
-    notice_period=models.IntegerField()
+    notice_period=models.IntegerField(blank=True,null=True)
     years_of_exp=models.IntegerField()
-    cover_letter=models.TextField()
+    cover_letter=models.TextField(blank=True,null=True)
     accepted=models.BooleanField(default=False)
     created_at=models.DateField(auto_now=False, auto_now_add=True,null=True)
 
