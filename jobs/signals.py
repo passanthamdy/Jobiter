@@ -5,27 +5,37 @@ from profiles.models import Employee
 from django.core.mail import send_mail
 from celery import shared_task
 from profiles.models import City
-
+from notifications.models import Notification
 
 
 @shared_task
-@receiver(m2m_changed, sender=Job.skills.through)
-def send_mails_to_matched_users(sender, instance, action, **kwargs):
-    if action == 'post_add':
+@receiver(post_save, sender=Job)
+def send_mails_to_matched_users(sender, instance:Job, **kwargs):
+    
         # send email logic
-        skills = instance.skills.all()
-        users = Employee.objects.filter(skills__in=skills)
-        users_emails = []
-        for user in users:
+    
+    title=instance.job_title
+    print('title>>>>>',instance)
+    users = Employee.objects.filter(job_title=title)
+    print(users)
+    users_emails = []
+    for user in users:
+        if user.allow_notification == True:
             users_emails.append(user.email)
-        users_emails = list(set(users_emails))
-        print(users_emails)
-        subject="Job Matching"
-        msg="Hello job seekers , this job matches your tags, you can apply"
-        send_mail(subject=subject,
-         message=msg,
-         from_email='youssef.15404@gmail.com',
-         recipient_list=users_emails)
+            Notification.objects.create(
+                user=user, message="Hello job seekers , a job that matches your job title is found, you will find the job in your notification bar",
+                job=instance,company=instance.company
+            )
+    
+    users_emails = list(set(users_emails))
+    print(users_emails)
+    subject="Job Matching"
+    msg="Hello job seekers , a job that matches your job title is found, you will find the job in your notification bar"
+    send_mail(subject=subject,
+        message=msg,
+        from_email='youssef.15404@gmail.com',
+        recipient_list=users_emails)
+   
 
 
 
@@ -35,12 +45,18 @@ def on_change(sender, instance: AppliedEmployees, **kwargs):
         pass 
     else:
         previous = AppliedEmployees.objects.get(id=instance.id)
-        if previous.accepted != instance.accepted: # field will be updated
+        if previous.accepted != instance.accepted and user.allow_notification == True: # field will be updated
             subject="Job notify"
             user_email=previous.employee.email
             print(user_email)
-            msg="You have been<h1> chosen </h1>to join the interview process with the job you applied for"
+            msg="You have been choosen to join the interview process with the job you applied for"
             send_mail(subject=subject,
             message=msg,
             from_email='youssef.15404@gmail.com',
             recipient_list=[user_email])
+            user=previous.employee
+            
+            notification=Notification.objects.create(
+                    user=user, message="You are accepted to start the interviewing proccess, the company will contact with you to schedule an interview appointment as soon as possible ",job=previous.job,company=previous.job.company
+                )
+            print('>>>>',notification)

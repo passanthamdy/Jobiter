@@ -6,6 +6,7 @@ from .models import Company, Employee
 from rest_framework.response import Response
 from rest_framework import status
 from accounts.models import User
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 # Create your views here.
 class RetrieveUpdateProfile(APIView):
     def get_object(self, pk,type):
@@ -43,6 +44,22 @@ class RetrieveUpdateProfile(APIView):
         else:
             return Response({"details": "You don't have the persmission to update this profile"}, status=status.HTTP_403_FORBIDDEN)
         return Response({"details": "your job cannot be edited "}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+#allow notification
+@api_view(["POST"])
+def allow_notification(request):
+    user = User.objects.get(pk=request.user.id)
+    if user.allow_notification:
+        user.allow_notification =False
+        user.save()
+    else:
+        user.allow_notification =True
+        user.save()
+    return Response({'data': "Done"},status=status.HTTP_200_OK)
+
+
 
         
     
