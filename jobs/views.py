@@ -33,11 +33,22 @@ def CreateJob(request):
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated, MyPermission, ])
-def ListCompanyJobs( request):
+def ListCompanyJobs(request):
         """
         Return a list of all jobs related to the requested user.
         """
         jobs = Job.objects.filter(company=request.user)
+        serializer = JobSerializer(jobs, many=True)
+        return Response(serializer.data)
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated, ])
+def getCompanyJobs(request,id):
+        """
+        Return a list of all jobs related to the company .
+        """
+        comp=Company.objects.get(pk=id)
+        jobs = Job.objects.filter(company=comp)
         serializer = JobSerializer(jobs, many=True)
         return Response(serializer.data)
 

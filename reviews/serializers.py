@@ -13,7 +13,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 class ReviewCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model=Review
-        exclude=('company','reviewer',)
+        exclude=('company','reviewer','employment_status')
         
 class UpdateReviewSerializer(serializers.ModelSerializer):
     company=CompanySerializer

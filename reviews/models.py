@@ -19,7 +19,7 @@ class Review(models.Model):
     # title = models.CharField(max_length=50)
     cons = models.TextField()
     title=models.TextField(default='')
-    employment_status = models.CharField(choices=EMP_STATUS, max_length=50)
+    employment_status = models.CharField(choices=EMP_STATUS, max_length=50, default='FULLTIME')
     rating = models.IntegerField()
     state=models.BooleanField(default=True)
     is_published = models.BooleanField(default=False)
