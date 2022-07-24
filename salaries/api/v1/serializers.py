@@ -9,3 +9,9 @@ class SalarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Salary
         fields = '__all__'
+
+class SalaryCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Salary
+        exclude=('company','reviewer',)
+   

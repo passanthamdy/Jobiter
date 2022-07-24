@@ -118,9 +118,13 @@ endpoint that get all the applied employees in certain job
 @permission_classes([IsAuthenticated, MyPermission, ])
 def list_applied_employees(request,pk):
     job =Job.objects.get(pk=pk)
+    print(">>>>>>><<",job)
     if job.company.id == request.user.id:
-        employees= AppliedEmployees.objects.get(job=job)
-        serializer = AppliedEmployeesSerializer(employees)
+        try:
+            employees= AppliedEmployees.objects.filter(job=job)
+        except Exception as ex:
+                return Response({"no jobs"}, status=status.HTTP_200_OK)
+        serializer = AppliedEmployeesSerializer(employees,many=True)
         return Response(serializer.data,status=status.HTTP_201_CREATED)
     return Response({"details": "You cannot list employees that does not belong to your jobs"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -174,6 +178,7 @@ class ListJobs(APIView):
 @permission_classes([IsAuthenticated, MyPermission, ])
 def accept_employee(request,job_id):
     user_id=request.data['id']
+    print("userid><><><", use)
     job=Job.objects.get(pk=job_id)
     user=Employee.objects.get(id=user_id)
     print('USER>>>>>>>>',user)

@@ -10,7 +10,11 @@ class ReviewSerializer(serializers.ModelSerializer):
         model=Review
         fields="__all__"
         
-
+class ReviewCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Review
+        exclude=('company','reviewer',)
+        
 class UpdateReviewSerializer(serializers.ModelSerializer):
     company=CompanySerializer
     reviewer=EmployeeSerializer

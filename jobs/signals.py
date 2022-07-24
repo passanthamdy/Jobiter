@@ -45,7 +45,7 @@ def on_change(sender, instance: AppliedEmployees, **kwargs):
         pass 
     else:
         previous = AppliedEmployees.objects.get(id=instance.id)
-        if previous.accepted != instance.accepted and user.allow_notification == True: # field will be updated
+        if previous.accepted != instance.accepted and previous.employee.allow_notification == True: # field will be updated
             subject="Job notify"
             user_email=previous.employee.email
             print(user_email)

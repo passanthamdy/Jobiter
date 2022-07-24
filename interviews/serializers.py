@@ -10,7 +10,11 @@ class InterviewSerializer(serializers.ModelSerializer):
         model=Interview
         fields="__all__"
         
-
+class InterviewCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Interview
+        exclude=('company_id','employee_id',)
+   
          
 class UpdateInterviewSerializer(serializers.ModelSerializer):
     class Meta:

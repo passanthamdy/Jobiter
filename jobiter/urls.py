@@ -25,8 +25,8 @@ urlpatterns = [
     path('api/profiles/',include('profiles.urls')),
     path('api/jobs/',include('jobs.urls')),
 
-    path('experience/api/v1/', include('experience.api.v1.urls')),
-    path('salary/api/v1/', include('salaries.api.v1.urls')),
+    path('api/experience/', include('experience.api.v1.urls')),
+    path('api/salary/', include('salaries.api.v1.urls')),
 
     path('api/reviews/',include('reviews.urls')),
     path('api/interviews/',include('interviews.urls')),

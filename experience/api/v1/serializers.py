@@ -14,9 +14,9 @@ class ExperienceSerializer(serializers.ModelSerializer):
         fields = ('company_name', 'job_title', 'start_date', 'end_date', 'description','user')
 
 #
-# class ExperienceCreateSerializer(serializers.ModelSerializer):
-#
-#     class Meta:
-#         model = Experience
-#         # fields = '__all__'
-#         fields = ('company_name', 'job_title', 'start_date', 'end_date', 'description',)
+class ExperienceCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Experience
+        # fields = '__all__'
+        exclude = ('user',)
